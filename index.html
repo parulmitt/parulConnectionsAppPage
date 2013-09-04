@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYB My Page</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="css/app.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+
+    <script type="text/x-handlebars" data-template-name="application">
+      <div class="navbar navbar-fluid-top">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <a class="brand" href="#">GYB My Page</a>
+            <div class="container-fluid nav-collapse">
+              <ul class="nav">
+                <li>{{#linkTo 'connections'}}Connections{{/linkTo}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span2">
+            <div class="well sidebar-nav">
+              <ul class="nav nav-list">
+                <li class="nav-header">GYB My Page</li>
+                <li>{{#linkTo 'connections'}}Connections{{/linkTo}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="span10">
+          {{outlet}}
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="conainter">
+          <p>&nbsp;</p>
+        </div>
+      </footer>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="connections">
+      <ul class="breadcrumb">
+        <li class="active">Connections</li>
+      </ul>
+      <div class="page-header">
+        <h1>Connections</h1>
+      </div>
+      {{partial 'connectionsTable'}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_connectionsTable">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+	      <th>Title</th>
+            <th>Email</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each connection in controller}}
+        <tr>
+          <td>{{#linkTo 'connection.index' connection}}{{connection.id}}{{/linkTo}}</td>
+          <td>{{connection.lastName}}</td>
+          <td>{{connection.firstName}}</td>
+	    <td>{{connection.title}}</td>
+          <td>{{connection.email}}</td>
+          <td>{{#linkTo 'connection.edit' connection}}<button class="btn btn-primary btn-mini">Edit</button>{{/linkTo}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="connection">
+      <ul class="breadcrumb">
+        <li>{{#linkTo 'connections'}}Connections{{/linkTo}} <span class="divider">/</span></li>
+        <li class="active">Connection {{id}}</li>
+      </ul>
+      <div class="page-header">
+        <h1>Connection <small>{{id}}</small></h1>
+      </div>
+      {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="connection/index">
+      <dl class="dl-horizontal">
+        <dt>First Name:</dt>
+        <dd>{{firstName}}<dd>
+        <dt>Last Name:</dt>
+        <dd>{{lastName}}<dd>
+
+        <dt>Title:</dt>
+        <dd>{{title}}<dd>
+        <dt>Email:</dt>
+        <dd>{{email}}<dd>
+      </dl>
+      <div class="form-actions">
+        {{#linkTo 'connection.edit' this}}<button class="btn btn-primary btn-small">Edit</button>{{/linkTo}}
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="connection/edit">
+      {{view App.ConnectionFormView classNames='form-horizontal'}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="connection/form">
+      <div class="control-group">
+        <label class="control-label" for="firstName">First Name</label>
+        <div class="controls">
+          {{view Ember.TextField valueBinding='firstName' id='firstName' placeholder='First Name'}}
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="lastName">Last Name</label>
+        <div class="controls">
+          {{view Ember.TextField valueBinding='lastName' id='lastName' placeholder='Last Name'}}
+        </div>
+      </div>
+<div class="control-group">
+        <label class="control-label" for="title">Title</label>
+        <div class="controls">
+          {{view Ember.TextField valueBinding='title' id='title' placeholder='Title'}}
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+          {{view Ember.TextField valueBinding='email' id='email' placeholder='Email'}}
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn" {{action 'cancelConnection'}}>Cancel</button>
+      </div>
+    </script>
+
+    <script src="js/libs/jquery-1.9.1.min.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/handlebars.js"></script>
+    <script src="js/libs/ember-1.0.0-rc.1.js"></script>
+    <script src="js/libs/ember-data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/fixtures.js"></script>
+  </body>
+</html>
